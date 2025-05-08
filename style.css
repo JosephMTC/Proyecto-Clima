@@ -24,6 +24,18 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
+/* 1) Asegura que el ::before del header quede debajo */
+.header-container::before {
+  z-index: 0;
+}
+
+/* 2) Todos los hijos directos del header (incluyendo selects, labels, inputs, botones) por encima */
+.header-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+
 /* ——— Header (switch + select + botón) ——— */
 .header-container {
   display: flex;
