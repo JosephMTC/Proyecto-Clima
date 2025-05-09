@@ -399,30 +399,3 @@ input[type="text"]:focus {
   font-size: 1rem;
 }
 
-/* ─── Forzar color de labels y selects ─── */
-.header-container label {
-  color: var(--text);
-}
-
-/* Selects dentro del header: fondo y texto */
-.header-container select {
-  color: var(--text);
-  background: var(--card);
-}
-
-/* Opciones del select */
-.header-container select option {
-  color: var(--text);
-  background: var(--card);
-}
-
-/* En caso de que el dropdown por defecto se pinte distinto en algunos navegadores */
-.header-container select::-ms-expand {
-  filter: invert(0%);
-}
-
-/* Asegura que las opciones al hacer hover/tocar se vean */
-.header-container select option:hover,
-.header-container select option:checked {
-  background: rgba(78, 84, 200, 0.1);
-}
