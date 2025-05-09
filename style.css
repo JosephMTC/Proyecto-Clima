@@ -399,3 +399,26 @@ input[type="text"]:focus {
   font-size: 1rem;
 }
 
+.header-container label,
+.header-container select,
+.header-container input[type="text"],
+.header-container button {
+  color: #333 !important;
+}
+
+/* Modo oscuro: texto claro */
+.dark-mode .header-container label,
+.dark-mode .header-container select,
+.dark-mode .header-container input[type="text"],
+.dark-mode .header-container button {
+  color: #eee !important;
+}
+/* 1) Por defecto (modo claro), todas las etiquetas dentro del header deben ser oscuras */
+.header-container label {
+  color: #e7e2e2 !important;
+}
+
+/* 2) En modo oscuro (cuando body tiene la clase .dark-mode), las etiquetas dentro del header deben ser claras */
+.dark-mode .header-container label {
+  color: #EEEEEE !important;
+}
