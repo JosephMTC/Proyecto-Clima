@@ -24,18 +24,6 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-/* 1) Asegura que el ::before del header quede debajo */
-.header-container::before {
-  z-index: 0;
-}
-
-/* 2) Todos los hijos directos del header (incluyendo selects, labels, inputs, botones) por encima */
-.header-container > * {
-  position: relative;
-  z-index: 1;
-}
-
-
 /* ——— Header (switch + select + botón) ——— */
 .header-container {
   display: flex;
@@ -173,28 +161,7 @@ body {
 }
 
 /* ——— Responsive ——— */
-@media (max-width: 480px) {
-  .header-container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
 
-@media (max-width: 720px) {
-  #stateSelect{
-  padding: 2px;
-  font-size: 1rem;
-}
-
-#cityInput{
-  display: flex;
-  padding: 3px;
-}
-#addCityBtn, #addBtn{
-  max-height: 20%;
-}
-
-}
 
 
 /* Spinner dentro de la card */
@@ -382,12 +349,27 @@ input[type="text"]:focus {
 }
 
 /* Responsive para controles pequeños */
-@media (max-width: 480px) {
+@media (max-width: 950px) {
   .header-container select,
   .header-container input[type="text"],
   .header-container button {
     width: 100%;
     margin-bottom: 10px;
+  }
+  body{
+  padding: 0; 
+  margin: 0; 
+  height: 100%; 
+  }
+  .header-container{
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+  padding: 0; /* o usa padding interno mínimo si quieres */
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  align-content: center;
   }
 }
 
@@ -399,6 +381,9 @@ input[type="text"]:focus {
   font-size: 1rem;
 }
 
+
+/* ——— Overrides para los controles dentro del header ——— */
+/* Modo claro: siempre texto oscuro */
 .header-container label,
 .header-container select,
 .header-container input[type="text"],
@@ -422,3 +407,4 @@ input[type="text"]:focus {
 .dark-mode .header-container label {
   color: #EEEEEE !important;
 }
+
