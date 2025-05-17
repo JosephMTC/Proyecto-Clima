@@ -1,4 +1,6 @@
 const apiKey = '41a6b4850398597c4ed2849cedd43510';
+let currentWeatherMain = '';
+let currentTimezone    = 0;
 
 // ————— DOM elements —————
 const unitSelect     = document.getElementById('unitSelect');
@@ -147,6 +149,8 @@ async function fetchWeather({ stateCode, lat, lon, query }) {
 
     // Update header mood video
     updateHeaderMood(w.weather[0].main, w.timezone);
+    currentWeatherMain = w.weather[0].main;
+    currentTimezone    = w.timezone;
 
     // UV index
     const uRes = await fetch(
@@ -245,26 +249,63 @@ function updateHeaderMood(weatherMain, timezone) {
   const video  = header.querySelector('.bg-video');
   if (!video) return;
 
-  // Clear old classes
+  // Limpiamos clases previas
   header.classList.remove('day','night','clear','rain');
 
-  // Local hour
-  const hour = new Date(Date.now()+timezone*1000).getUTCHours();
-  const timeClass = (hour>=6 && hour<18)?'day':'night';
+  // Determinamos día o noche
+  const hour = new Date(Date.now() + timezone * 1000).getUTCHours();
+  const timeClass = (hour >= 6 && hour < 18) ? 'day' : 'night';
   header.classList.add(timeClass);
 
-  const wc = weatherMain.toLowerCase()==='rain'?'rain':'clear';
+  // Determinamos clear o rain
+  const wc = (weatherMain.toLowerCase() === 'rain') ? 'rain' : 'clear';
   header.classList.add(wc);
 
-  const path = `videos/${wc}-${timeClass}.mp4`;
+  // --- Aquí entra la lógica móvil ---
+  // Nombre base: e.g. "videos/clear-day"
+  const basePath = `videos/${wc}-${timeClass}`;
+  // Sufijo para móvil: clear→"One", rain→"Two"
+  const mobileSuffix = (wc === 'clear') ? 'One' : 'Two';
+  // Si es pantalla pequeña (<768px)
+  const isMobile = window.innerWidth <= 768;
+  // Elegimos ruta: si existe la versión móvil, úsala
+  const path = isMobile
+    ? `${basePath}${mobileSuffix}.mp4`
+    : `${basePath}.mp4`;
+  // -----------------------------------
+
+  // Reproducimos
   video.classList.remove('visible');
-  video.pause(); video.currentTime = 0;
-  fetch(path,{method:'HEAD'})
-    .then(r=>{ if(r.ok){
-      video.src=path; video.load(); video.play().catch(()=>{});
-      video.onloadeddata = ()=> video.classList.add('visible');
-    }}).catch(()=>{});
+  video.pause();
+  video.currentTime = 0;
+
+  // Antes de asignar, comprobamos que el archivo existe (HEAD)
+  fetch(path, { method: 'HEAD' })
+    .then(res => {
+      if (res.ok) {
+        video.src = path;
+      } else {
+        // Si no existe, caemos al de alta calidad
+        video.src = `${basePath}.mp4`;
+      }
+      video.load();
+      video.play().catch(() => {});
+      video.onloadeddata = () => video.classList.add('visible');
+    })
+    .catch(() => {
+      // En caso de error de red, también usamos la versión normal
+      video.src = `${basePath}.mp4`;
+      video.load();
+      video.play().catch(() => {});
+      video.onloadeddata = () => video.classList.add('visible');
+    });
 }
+
+window.addEventListener('resize', () => {
+  if (currentWeatherMain && currentTimezone !== 0) {
+    updateHeaderMood(currentWeatherMain, currentTimezone);
+  }
+});
 
 
 
