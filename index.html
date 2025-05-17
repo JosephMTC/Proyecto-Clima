@@ -9,16 +9,16 @@
 
 </head>
 <body>
-  <header class="header-container">
-    <video class="bg-video" muted loop autoplay playsinline preload="metadata">
-      <!-- src se asignará desde JavaScript -->
-    </video>
-    <h1 tabindex="0">Dime el Clima Mundial</h1>
-    
+<header class="header-container">
+  <video class="bg-video" muted loop autoplay playsinline preload="metadata">
+    <!-- src se asignará desde JavaScript -->
+  </video>
+
+  <h1 tabindex="0">Dime el Clima Mundial</h1>
+
+  <span class="form-pair">
     <label for="stateSelect">Estado:</label>
-    <select id="stateSelect"
-            aria-label="Seleccionar estado"
-            tabindex="0">
+    <select id="stateSelect" aria-label="Seleccionar estado" tabindex="0">
       <option value="">— Elige un estado —</option>
       <option value="CA">California</option>
       <option value="NY">Nueva York</option>
@@ -31,34 +31,33 @@
       <option value="NM">New Mexico</option>
       <option value="CO">Colorado</option>
     </select>
-  
-    <button id="addBtn"
-            aria-label="Agregar estado"
-            tabindex="0">
-      Agregar
-    </button>
-  
+    <button id="addBtn" aria-label="Agregar estado" tabindex="0">Agregar</button>
+  </span>
 
-  
+  <span class="form-pair">
     <label for="unitSelect">Unidad:</label>
-    <select id="unitSelect" class="selectunit"
-            aria-label="Seleccionar unidad de temperatura"
-            tabindex="0">
+    <select id="unitSelect" class="selectunit" aria-label="Seleccionar unidad de temperatura" tabindex="0">
       <option value="metric">°C</option>
       <option value="imperial">°F</option>
     </select>
-    <input type="text" id="cityInput" placeholder="Ingresa ciudad, ej. Tokyo,JP">
-    <button id="addCityBtn">Agregar ciudad</button>
-    <label class="theme-switch">
-      <input 
-        type="checkbox" 
-        id="themeToggle" 
-        aria-label="Cambiar tema claro u oscuro"
-        tabindex="0" 
-      />
-      <span class="slider"></span>
-    </label>
-  </header>
+  </span>
+
+  <span class="form-pair">
+    <label for="cityInput">Ciudad:</label>
+    <input type="text" id="cityInput" placeholder="Ingresa ciudad, ej. Tokyo,JP" tabindex="0">
+    <button id="addCityBtn" aria-label="Agregar ciudad" tabindex="0">Agregar ciudad</button>
+  </span>
+
+  <label class="theme-switch">
+    <input
+      type="checkbox"
+      id="themeToggle"
+      aria-label="Cambiar tema claro u oscuro"
+      tabindex="0"
+    />
+    <span class="slider"></span>
+  </label>
+</header>
 
   <main id="cardsContainer">
     <!-- Aquí se irán insertando tarjetas de clima -->
